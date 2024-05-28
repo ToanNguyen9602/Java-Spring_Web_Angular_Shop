@@ -6,6 +6,7 @@ import com.project.shopapp.exception.DataNotFoundException;
 import com.project.shopapp.exception.InvalidParamException;
 import com.project.shopapp.models.*;
 import com.project.shopapp.repositories.*;
+import com.project.shopapp.responses.ProductResponse;
 import lombok.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.*;
@@ -24,6 +25,7 @@ public class ProductService implements IProductService{
       Category existingCategory = categoryRespository.findById(productDTO.getCategoryId())
         .orElseThrow(() -> new DataNotFoundException(
           "Cannot find Category with Id: " + productDTO.getCategoryId()));
+
       Product newProduct = Product.builder()
         .name(productDTO.getName())
         .price(productDTO.getPrice())
@@ -41,9 +43,21 @@ public class ProductService implements IProductService{
   }
 
   @Override
-  public Page<Product> getAllProducts(PageRequest pageRequest) {
+  public Page<ProductResponse> getAllProducts(PageRequest pageRequest) {
     //lấy danh sách sanr phẩm theo page và limit
-    return productRespository.findAll(pageRequest);
+    //chuyển từ danh sách product sang danh sách productResponse
+    return productRespository.findAll(pageRequest).map(product ->{
+      ProductResponse productResponse = ProductResponse.builder()
+       .name(product.getName())
+       .price(product.getPrice())
+       .thumbnail(product.getThumbnail())
+       .description(product.getDescription())
+        .categoryId(product.getCategory().getId())
+       .build();
+      productResponse.setCreatedAt(product.getCreateAt());
+      productResponse.setUpdatedAt(product.getUpdateAt());
+      return productResponse;
+    });
   }
 
   @Override
@@ -80,7 +94,7 @@ public class ProductService implements IProductService{
     Long productId, ProductImageDTO productImageDTO) throws Exception {
 
     Product existingProduct = productRespository
-      .findById(productImageDTO.getProductId())
+      .findById(productId)
       .orElseThrow(() ->
         new DataNotFoundException("Cannot find product with Id: "
           + productImageDTO.getProductId()));
@@ -92,8 +106,9 @@ public class ProductService implements IProductService{
 
     //Kh cho insert quá 5 ảnh cho 1 sản phẩm
     int size = productImageRepository.findByProductId(productId).size();
-    if (size >= 5) {
-      throw new InvalidParamException("You cannot add more than 5 images");
+    if (size >= ProductImage.MAXIMUM_IMAGES_PER_PRODUCT) {
+      throw new InvalidParamException("Number of images must be " +
+        "<= " + ProductImage.MAXIMUM_IMAGES_PER_PRODUCT);
     }
     return productImageRepository.save(newProductImage);
   }
