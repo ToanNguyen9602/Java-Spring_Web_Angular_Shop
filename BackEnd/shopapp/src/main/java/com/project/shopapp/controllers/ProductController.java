@@ -62,7 +62,7 @@ public class ProductController {
     @PathVariable("id") Long productId
   ) throws Exception {
     Product existingproduct = productService.getProductById(productId);
-    return ResponseEntity.ok(existingproduct);
+    return ResponseEntity.ok(ProductResponse.fromProduct(existingproduct));
   }
 
   @PostMapping("")
@@ -153,14 +153,14 @@ public class ProductController {
   }
 
   @DeleteMapping("/{id}")
-  public ResponseEntity<?> deleteProduct(
+  public ResponseEntity<String> deleteProduct(
     @PathVariable long productId
   ) {
     try {
-      Product existingProduct = productService.getProductById(productId);
-      return ResponseEntity.ok(existingProduct);
+      productService.deleteProduct(productId);
+      return ResponseEntity.ok(String.format("Product with id %d was deleted: " + productId));
     } catch (Exception e) {
-      throw new RuntimeException(e);
+      return ResponseEntity.badRequest().body(e.getMessage());
     }
   }
 

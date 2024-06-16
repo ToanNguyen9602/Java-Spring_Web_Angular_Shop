@@ -10,7 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 public interface IProductService {
-  public Product createProduct(ProductDTO productDTO) throws DataNotFoundException;
+  Product createProduct(ProductDTO productDTO) throws DataNotFoundException;
   Product getProductById(Long id) throws Exception;
   Page<ProductResponse> getAllProducts(PageRequest pageRequest);
   public Product updateProduct(Long id, ProductDTO productDTO) throws Exception;

@@ -46,18 +46,7 @@ public class ProductService implements IProductService{
   public Page<ProductResponse> getAllProducts(PageRequest pageRequest) {
     //lấy danh sách sanr phẩm theo page và limit
     //chuyển từ danh sách product sang danh sách productResponse
-    return productRespository.findAll(pageRequest).map(product ->{
-      ProductResponse productResponse = ProductResponse.builder()
-       .name(product.getName())
-       .price(product.getPrice())
-       .thumbnail(product.getThumbnail())
-       .description(product.getDescription())
-        .categoryId(product.getCategory().getId())
-       .build();
-      productResponse.setCreatedAt(product.getCreateAt());
-      productResponse.setUpdatedAt(product.getUpdateAt());
-      return productResponse;
-    });
+    return productRespository.findAll(pageRequest).map(ProductResponse::fromProduct);
   }
 
   @Override
