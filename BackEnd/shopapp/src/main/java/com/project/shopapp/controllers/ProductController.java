@@ -59,10 +59,14 @@ public class ProductController {
 
   @GetMapping("/{id}")
   public ResponseEntity<?> getProductById(
-    @PathVariable("id") Long productId
-  ) throws Exception {
-    Product existingproduct = productService.getProductById(productId);
-    return ResponseEntity.ok(ProductResponse.fromProduct(existingproduct));
+    @PathVariable("id") Long productId) {
+    try {
+      Product existingproduct = productService.getProductById(productId);
+      return ResponseEntity.ok(ProductResponse.fromProduct(existingproduct));
+    } catch (Exception e) {
+      return ResponseEntity.badRequest().body(e.getMessage());
+    }
+
   }
 
   @PostMapping("")
@@ -151,19 +155,27 @@ public class ProductController {
     }
     return true;
   }
-
   @DeleteMapping("/{id}")
   public ResponseEntity<String> deleteProduct(
-    @PathVariable long productId
-  ) {
+    @PathVariable long id) {
     try {
-      productService.deleteProduct(productId);
-      return ResponseEntity.ok(String.format("Product with id %d was deleted: " + productId));
+      productService.deleteProduct(id);
+      return ResponseEntity.ok(String.format("Product with id %d was deleted: " , id));
     } catch (Exception e) {
       return ResponseEntity.badRequest().body(e.getMessage());
     }
   }
-
+  @PutMapping("/{id}")
+  public ResponseEntity<?> updateProduct(
+    @PathVariable long id,
+    @RequestBody ProductDTO productDTO) {
+    try {
+      Product updatedProduct = productService.updateProduct(id, productDTO);
+      return ResponseEntity.ok(updatedProduct);
+    } catch (Exception e) {
+      return ResponseEntity.badRequest().body(e.getMessage());
+    }
+  }
 //  @PostMapping("/generateFakerProducts")
   private ResponseEntity<String> generateFakerProducts() {
     Faker faker = new Faker();
