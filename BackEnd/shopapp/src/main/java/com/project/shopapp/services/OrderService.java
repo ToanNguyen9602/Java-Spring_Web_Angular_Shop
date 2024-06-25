@@ -29,6 +29,7 @@ public class OrderService implements IOrderService {
     //convert orderDTO => Order
     modelMapper.typeMap(OrderDTO.class, Order.class)
       .addMappings(mapper -> mapper.skip(Order::setId));
+    Order order = new Order();
     modelMapper.map(orderDTO,order);
     return null;
   }
