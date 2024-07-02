@@ -64,11 +64,16 @@ public class OrderService implements IOrderService {
     modelMapper.typeMap(OrderDTO.class, Order.class).addMappings(mapper -> mapper.skip(Order::setId));
     modelMapper.map(orderDTO, order);
     order.setUser(existingUser);
-    orderRepository.save(order);
-    return null;
+    return orderRepository.save(order);
   }
   @Override
   public void deleteOrder(Long id) {
+    Order order = orderRepository.findById(id).orElse(null);
+    //Khong xoa cứng, mà xóa mềm
+    if (order != null) {
+      order.setActive(false);
+      orderRepository.save(order);
+    }
   }
   @Override
   public List<Order> findByUserId(Long userId) {

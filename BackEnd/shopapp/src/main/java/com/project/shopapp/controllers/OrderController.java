@@ -58,7 +58,8 @@ public class OrderController {
   @DeleteMapping("/{id}")
   public ResponseEntity<String> deleteOrder(@Valid @PathVariable Long id) {
     //xoá mềm => cập nhật trường active = false
-    return ResponseEntity.ok("Xoá 1 order thành công");
+    orderService.deleteOrder(id);
+    return ResponseEntity.ok("Order deleted successfully");
   }
 
   @GetMapping("user/{user_id}")
