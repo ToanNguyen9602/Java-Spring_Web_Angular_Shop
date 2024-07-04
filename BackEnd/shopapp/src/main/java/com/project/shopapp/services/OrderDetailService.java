@@ -9,10 +9,11 @@ import com.project.shopapp.repositories.OrderDetailRepository;
 import com.project.shopapp.repositories.OrderRepository;
 import com.project.shopapp.repositories.ProductRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@RequiredArgsConstructor
+@RequiredArgsConstructor @Service
 public class OrderDetailService implements IOrderDetailService {
     private final OrderDetailRepository orderDetailRepository;
     private final OrderRepository orderRepository;
@@ -25,12 +26,21 @@ public class OrderDetailService implements IOrderDetailService {
         Product product = productRepository.findById(orderDetailDTO.getProductId())
                 .orElseThrow(() -> new DataNotFoundException("Cannot find product with ID: "
                         + orderDetailDTO.getProductId()));
-        return null;
+        OrderDetail orderDetail = OrderDetail.builder()
+          .order(order)
+          .product(product)
+          .numberOfProducts(orderDetailDTO.getNumberOfProducts())
+          .totalMoney(orderDetailDTO.getTotalMoney())
+          .price(orderDetailDTO.getPrice())
+          .Color(orderDetailDTO.getColor())
+          .build();
+        return orderDetailRepository.save(orderDetail);
     }
 
     @Override
-    public OrderDetail getOrderDetail(Long id) {
-        return null;
+    public OrderDetail getOrderDetail(Long id) throws DataNotFoundException {
+      return orderDetailRepository.findById(id)
+        .orElseThrow(()-> new DataNotFoundException("Cannot find orderDetail with ID: " + id));
     }
 
     @Override
@@ -40,11 +50,11 @@ public class OrderDetailService implements IOrderDetailService {
 
     @Override
     public void deleteOrderDetail(Long id) {
-
+      orderDetailRepository.deleteById(id);
     }
 
     @Override
-    public List<OrderDetail> getOrderDetails(Long orderId) {
-        return null;
+    public List<OrderDetail> findByOrderId(Long orderId) {
+      return orderDetailRepository.findByOrderId(orderId);
     }
 }
