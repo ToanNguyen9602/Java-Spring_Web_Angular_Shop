@@ -2,14 +2,20 @@ package com.project.shopapp.models;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 @Entity @Builder @Data
 @Getter @Setter
 @Table(name = "users")
 @AllArgsConstructor @NoArgsConstructor
-public class User extends BaseEntity {
+public class User extends BaseEntity implements UserDetails {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
@@ -41,4 +47,42 @@ public class User extends BaseEntity {
   @ManyToOne
   @JoinColumn(name = "role_id")
   private Role role;
+
+  //lấy quyền = role
+  @Override
+  public Collection<? extends GrantedAuthority> getAuthorities() {
+    List<SimpleGrantedAuthority> authorityList = new ArrayList<>();
+    authorityList.add(new SimpleGrantedAuthority(
+            "ROLE_"+getRole().getName()));
+    return authorityList;
+  }
+  //trường username thì thằng User nó tự hiểu duy nhất k trùng
+  //còn mình thì tùy quy ước phone hay id hay username tuy minh
+
+  @Override
+  public String getUsername() {
+    return phoneNumber;
+  }
+
+  //tai khoan k gioi han
+  @Override
+  public boolean isAccountNonExpired() {
+    return true;
+  }
+
+  //không thể khóa dc
+  @Override
+  public boolean isAccountNonLocked() {
+    return true;
+  }
+
+  @Override
+  public boolean isCredentialsNonExpired() {
+    return true;
+  }
+
+  @Override
+  public boolean isEnabled() {
+    return true;
+  }
 }
