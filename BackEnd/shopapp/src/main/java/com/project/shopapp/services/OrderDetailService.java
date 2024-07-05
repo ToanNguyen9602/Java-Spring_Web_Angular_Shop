@@ -44,13 +44,30 @@ public class OrderDetailService implements IOrderDetailService {
     }
 
     @Override
-    public OrderDetail updateOrderDetail(Long id, OrderDetailDTO orderDetail) {
-        return null;
+    public OrderDetail updateOrderDetail(Long id, OrderDetailDTO orderDetailDTO) throws DataNotFoundException {
+        OrderDetail existingOrderDetail = orderDetailRepository.findById(id)
+                .orElseThrow(()-> new DataNotFoundException("Cannot find OrdeDetail with Id " + id));
+        Order existingOrder = orderRepository.findById(orderDetailDTO.getOrderId())
+                .orElseThrow(()-> new DataNotFoundException("Cannot find Order with Id: " + orderDetailDTO.getOrderId()));
+        Product existingProduct = productRepository.findById(orderDetailDTO.getProductId())
+                .orElseThrow(()-> new DataNotFoundException("Cannot find Product with Id: " + orderDetailDTO.getProductId()));
+
+        existingOrderDetail.setPrice(orderDetailDTO.getPrice());
+        existingOrderDetail.setColor(orderDetailDTO.getColor());
+        existingOrderDetail.setPrice(orderDetailDTO.getPrice());
+        existingOrderDetail.setNumberOfProducts(orderDetailDTO.getNumberOfProducts());
+        existingOrderDetail.setTotalMoney(orderDetailDTO.getTotalMoney());
+        //đổi sang order khác - hiếm xảy ra
+        existingOrderDetail.setOrder(existingOrder);
+        //đổi sản phẩm khác
+        existingOrderDetail.setProduct(existingProduct);
+
+        return orderDetailRepository.save(existingOrderDetail);
     }
 
     @Override
-    public void deleteOrderDetail(Long id) {
-      orderDetailRepository.deleteById(id);
+    public void deleteById(Long id) {
+        orderDetailRepository.deleteById(id);
     }
 
     @Override
