@@ -72,9 +72,11 @@ public class JwtTokenUtil {
         return claimsResolver.apply(claims);
     }
     //check expiration coi token hết hạn chưa
-    private boolean isTokenExpired(String token) {
+    public boolean isTokenExpired(String token) {
         Date expirationDate = this.extractClaim(token, Claims::getExpiration);
         return expirationDate.before(new Date());
     }
-
+    public String extractPhoneNumber(String token) {
+        return extractClaim(token, Claims::getSubject);
+    }
 }
