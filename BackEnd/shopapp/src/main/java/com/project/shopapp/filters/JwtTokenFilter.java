@@ -45,14 +45,14 @@ public class JwtTokenFilter extends OncePerRequestFilter {
             }
             //request yêu cầu Token
             final String authHeader = request.getHeader("Authorization");
-            if (authHeader != null && authHeader.startsWith("Bearer ")
+            if (authHeader.startsWith("Bearer ")
             ) {
                 //bỏ 7 ký tự đầu tiên sẽ được token
                 final String token = authHeader.substring(7);
                 final String phoneNumber = jwtTokenUtil.extractPhoneNumber(token);
                 if (phoneNumber != null &&
                         SecurityContextHolder.getContext().getAuthentication() == null) {
-                    UserDetails userDetails = userDetailsService.loadUserByUsername(phoneNumber);
+                    User userDetails = (User) userDetailsService.loadUserByUsername(phoneNumber);
                     if (jwtTokenUtil.validateToken(token, userDetails)) {
                         UsernamePasswordAuthenticationToken authenticationToken =
                                 new UsernamePasswordAuthenticationToken(
