@@ -8,7 +8,7 @@ import { OrderConfirmComponent } from './order-confirm/order-confirm.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { DetailProductComponent } from './detail-product/detail-product.component';
-
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -23,15 +23,16 @@ import { DetailProductComponent } from './detail-product/detail-product.componen
     DetailProductComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [//HomeComponent,
     //OrderComponent,
     //OrderConfirmComponent,
     //LoginComponent,
-    //RegisterComponent,
-    DetailProductComponent
+    RegisterComponent,
+    //DetailProductComponent
   ]
 })
 export class AppModule { }
