@@ -6,10 +6,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Entity @Builder @Data
 @Getter @Setter
@@ -52,9 +49,9 @@ public class User extends BaseEntity implements UserDetails {
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
     List<SimpleGrantedAuthority> authorityList = new ArrayList<>();
-//    authorityList.add(new SimpleGrantedAuthority(
-//            "ROLE_"+getRole().getName()));
-    authorityList.add(new SimpleGrantedAuthority("ROLE_USER"));
+    authorityList.add(new SimpleGrantedAuthority(
+            "ROLE_"+getRole().getName().toUpperCase()));
+//    authorityList.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
     return authorityList;
   }
   //trường username thì thằng User nó tự hiểu duy nhất k trùng

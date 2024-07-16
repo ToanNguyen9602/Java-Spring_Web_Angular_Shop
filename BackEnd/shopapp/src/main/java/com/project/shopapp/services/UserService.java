@@ -3,6 +3,7 @@ package com.project.shopapp.services;
 import com.project.shopapp.components.JwtTokenUtil;
 import com.project.shopapp.dtos.UserDTO;
 import com.project.shopapp.exception.DataNotFoundException;
+import com.project.shopapp.exception.PermissionDenyException;
 import com.project.shopapp.models.Role;
 import com.project.shopapp.models.User;
 import com.project.shopapp.repositories.RoleRepository;
@@ -26,12 +27,17 @@ public class UserService implements IUserService{
   private final JwtTokenUtil jwtTokenUtil;
   private final AuthenticationManager authenticationManager;
   @Override
-  public User createUser(UserDTO userDTO) throws DataNotFoundException {
+  public User createUser(UserDTO userDTO) throws Exception {
     //register user
     String phoneNumber = userDTO.getPhoneNumber();
     //check xem username hay phone đã tồn tại chưa
     if (userRepository.existsByPhoneNumber(phoneNumber)) {
       throw new DataIntegrityViolationException("Phone number already exists");
+    }
+    Role role = roleRepository.findById(userDTO.getRoleId())
+            .orElseThrow(()-> new DataNotFoundException("Role not found"));
+    if (role.getName().toUpperCase().equals(Role.ADMIN)) {
+      throw new PermissionDenyException("You cannot register an admin account");
     }
     //convert userDTO sang User
     User newUser = User.builder()
@@ -45,8 +51,6 @@ public class UserService implements IUserService{
                                 .active(true)
                                 .build();
 
-    Role role = roleRepository.findById(userDTO.getRoleId())
-            .orElseThrow(()-> new DataNotFoundException("Role not found"));
     //KTra nếu có accountId, không yêu cầu pass
     if (userDTO.getFacebookAccountId()== 0 && userDTO.getGoogleAccountId() == 0) {
       String password = userDTO.getPassword();
