@@ -1,4 +1,5 @@
-import { Component } from "@angular/core";
+import { Component, ViewChild } from "@angular/core";
+import { NgForm } from "@angular/forms";
 
 @Component({
   selector: "app-register",
@@ -6,6 +7,7 @@ import { Component } from "@angular/core";
   styleUrls: ["./register.component.scss"],
 })
 export class RegisterComponent {
+  @ViewChild('registerForm') registerForm!: NgForm;
   //Khai báo các biến tương ứng trường dữ liệu trên form
   phone: string;
   password: string;
@@ -39,5 +41,12 @@ export class RegisterComponent {
       `isAccepted : ${this.isAccepted}` +
       `dateOfBirth: ${this.dateOfBirth}`;
     alert(message);
+  }
+  checkPasswordsMatch() {
+    if (this.password !== this.retypePassword) {
+    this.registerForm.form.controls['retypePassword'].setErrors({'passwordMismatch': true});
+    } else {
+      this.registerForm.form.controls['retypePassword'].setErrors(null);
+    }
   }
 }
