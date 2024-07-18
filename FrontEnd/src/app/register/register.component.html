@@ -95,14 +95,21 @@
             <label for="date-of-birth">Ngày tháng năm sinh</label>
             <input
               type="date"
-              class="form-control" name="dateOfBirth"
-              required (input)="registerForm.form.markAsTouched(); checkAge();"
+              class="form-control"
+              name="dateOfBirth"
+              required
+              (input)="registerForm.form.markAsTouched(); checkAge()"
               id="date-of-birth"
               [(ngModel)]="dateOfBirth"
             />
             <div class="divider-nospace"></div>
-            <p class="text-danger" *ngIf="registerForm.controls['dateOfBirth'].hasError("invalidAge")
-            && registerForm.form.touched">
+            <p
+              class="text-danger"
+              *ngIf="
+                registerForm.controls['dateOfBirth'].hasError('invalidAge') &&
+                registerForm.form.touched
+              "
+            >
               Bạn chưa đủ 18 tuổi
             </p>
           </div>
