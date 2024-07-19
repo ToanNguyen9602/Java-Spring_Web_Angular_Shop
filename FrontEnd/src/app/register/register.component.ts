@@ -3,6 +3,8 @@ import { NgForm } from "@angular/forms";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { from } from "rxjs";
 import { Router } from "@angular/router";
+import { UserService } from "../service/user.service";
+import { ResgisterDTO } from "../dtos/user/register.dto";
 
 @Component({
   selector: "app-register",
@@ -20,12 +22,12 @@ export class RegisterComponent {
   isAccepted: boolean;
   dateOfBirth: Date;
 
-  constructor(private http: HttpClient, private router: Router) {
-    this.phone = "0903925037";
-    this.password = "123456";
-    this.retypePassword = "123456";
-    this.fullName = "Nguyen Ngoc Giau";
-    this.address = "76 hvn";
+  constructor(private router: Router, private userService: UserService) {
+    this.phone = "";
+    this.password = "";
+    this.retypePassword = "";
+    this.fullName = "";
+    this.address = "";
     this.isAccepted = true;
     this.dateOfBirth = new Date();
     this.dateOfBirth.setFullYear(this.dateOfBirth.getFullYear() - 18);
@@ -46,8 +48,8 @@ export class RegisterComponent {
       `dateOfBirth: ${this.dateOfBirth}`;
     // alert(message);
     debugger;
-    const apiURL = "http://localhost:8090/api/v1/users/register";
-    const registerData = {
+
+    const registerDTO: ResgisterDTO = {
       fullname: this.fullName,
       phone_number: this.phone,
       address: this.address,
@@ -58,9 +60,8 @@ export class RegisterComponent {
       google_account_id: 0,
       role_id: 1,
     };
-    const headers = new HttpHeaders({ "Content-Type": "application/json" });
 
-    this.http.post(apiURL, registerData, { headers }).subscribe({
+    this.userService.register(registerDTO).subscribe({
       next: (response: any) => {
         debugger;
         this.router.navigate(["/login"]);
@@ -70,7 +71,7 @@ export class RegisterComponent {
       },
       error: (error: any) => {
         //xử lý lỗi nếu có
-        alert(`Cannot register, error: ${error.error}`)
+        alert(`Cannot register, error: ${error.error}`);
         debugger;
         console.error("Dang ky khong thanh cong", error);
       },

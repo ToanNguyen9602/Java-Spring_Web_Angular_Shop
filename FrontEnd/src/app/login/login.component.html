@@ -4,8 +4,13 @@
             <div class="login-form mx-auto">
                 <h2 class="login-header">Đăng nhập</h2>
                 <div class="form-group">
-                    <label for="email">Email/Phone</label>
-                    <input type="text" class="form-control" id="email">
+                    <label for="phoneNumber">Phone</label>
+                    <input type="text" class="form-control" 
+                    id="phoneNumber"
+                    [(ngModel)]="phone"
+                    (input)="onPhoneChange()"
+                    (focus)="registerForm.form.markAsTouched()"
+                    >
                     <div class="divider-nospace"></div>
                 </div>
                 <div class="mt-5"></div>
