@@ -21,16 +21,10 @@ export class UserService {
   }
 
   register(registerDTO: ResgisterDTO): Observable<any> {
-    const headers = new HttpHeaders({
-      "Content-Type": "application/json",
-    });
     return this.http.post(this.apiRegister, registerDTO, this.apiConfig);
   }
 
   login(loginDTO: LoginDTO): Observable<any> {
-    const headers = new HttpHeaders({
-      "Content-Type": "application/json",
-    });
-    return this.http.post(this.apiRegister, loginDTO, this.apiConfig);
+    return this.http.post(this.apiLogin, loginDTO, this.apiConfig);
   }
 }

@@ -14,7 +14,7 @@ import { ResgisterDTO } from "../dtos/user/register.dto";
 export class RegisterComponent {
   @ViewChild("registerForm") registerForm!: NgForm;
   //Khai báo các biến tương ứng trường dữ liệu trên form
-  phone: string;
+  phoneNumber: string;
   password: string;
   retypePassword: string;
   fullName: string;
@@ -23,7 +23,7 @@ export class RegisterComponent {
   dateOfBirth: Date;
 
   constructor(private router: Router, private userService: UserService) {
-    this.phone = "";
+    this.phoneNumber = "";
     this.password = "";
     this.retypePassword = "";
     this.fullName = "";
@@ -34,12 +34,12 @@ export class RegisterComponent {
     //inject
   }
 
-  onPhoneChange() {
-    console.log(`Phone typed: ${this.phone}`);
+  onPhoneNumberChange() {
+    console.log(`Phone typed: ${this.phoneNumber}`);
   }
   register() {
     const message =
-      `phone: ${this.phone}` +
+      `phone: ${this.phoneNumber}` +
       `password: ${this.password}` +
       `retypePassword: ${this.retypePassword}` +
       `fullName : ${this.fullName} ` +
@@ -51,7 +51,7 @@ export class RegisterComponent {
 
     const registerDTO: ResgisterDTO = {
       fullname: this.fullName,
-      phone_number: this.phone,
+      phone_number: this.phoneNumber,
       address: this.address,
       password: this.password,
       retype_password: this.retypePassword,
