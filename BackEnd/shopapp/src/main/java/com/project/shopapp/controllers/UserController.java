@@ -2,6 +2,7 @@ package com.project.shopapp.controllers;
 
 import com.project.shopapp.dtos.*;
 import com.project.shopapp.models.User;
+import com.project.shopapp.responses.LoginResponse;
 import com.project.shopapp.services.IUserService;
 import com.project.shopapp.services.UserService;
 import jakarta.validation.Valid;
@@ -46,11 +47,13 @@ public class UserController {
   }
 
   @PostMapping("/login")
-  public ResponseEntity<String> login (@Valid @RequestBody UserLoginDTO userLoginDTO) {
+  public ResponseEntity<LoginResponse> login (@Valid @RequestBody UserLoginDTO userLoginDTO) {
     //kiểm tra thông tin đăng nhập và sinh token
     try {
       String token = userService.login(userLoginDTO.getPhoneNumber(), userLoginDTO.getPassword());
-      return ResponseEntity.ok(token);
+      return ResponseEntity.ok(LoginResponse.builder()
+              .message()
+              .build());
     } catch (Exception e) {
       return ResponseEntity.badRequest().body(e.getMessage());
     }
