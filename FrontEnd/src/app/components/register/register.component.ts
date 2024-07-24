@@ -3,8 +3,8 @@ import { NgForm } from "@angular/forms";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { from } from "rxjs";
 import { Router } from "@angular/router";
-import { UserService } from "../service/user.service";
-import { ResgisterDTO } from "../dtos/user/register.dto";
+import { UserService } from "../../service/user.service";
+import { ResgisterDTO } from "../../dtos/user/register.dto";
 
 @Component({
   selector: "app-register",

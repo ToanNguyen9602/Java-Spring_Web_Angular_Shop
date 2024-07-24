@@ -1,6 +1,6 @@
 package com.project.shopapp.services;
 
-import com.project.shopapp.components.JwtTokenUtil;
+import com.project.shopapp.components.JwtTokenUtils;
 import com.project.shopapp.dtos.UserDTO;
 import com.project.shopapp.exception.DataNotFoundException;
 import com.project.shopapp.exception.PermissionDenyException;
@@ -24,7 +24,7 @@ public class UserService implements IUserService{
   private final UserRepository userRepository;
   private final RoleRepository roleRepository;
   private final PasswordEncoder passwordEncoder;
-  private final JwtTokenUtil jwtTokenUtil;
+  private final JwtTokenUtils jwtTokenUtils;
   private final AuthenticationManager authenticationManager;
   @Override
   public User createUser(UserDTO userDTO) throws Exception {
@@ -80,6 +80,6 @@ public class UserService implements IUserService{
             phoneNumber,password, existingUser.getAuthorities());
     //authenticate with Java Spring security - xác thực vs security
     authenticationManager.authenticate(authenticationToken);
-    return jwtTokenUtil.generateToken(existingUser);
+    return jwtTokenUtils.generateToken(existingUser);
   }
 }

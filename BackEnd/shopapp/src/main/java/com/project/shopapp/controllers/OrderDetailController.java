@@ -1,5 +1,6 @@
 package com.project.shopapp.controllers;
 
+import com.project.shopapp.components.LocalizationUtils;
 import com.project.shopapp.dtos.OrderDetailDTO;
 import com.project.shopapp.exception.DataNotFoundException;
 import com.project.shopapp.models.OrderDetail;
@@ -17,6 +18,7 @@ import java.util.List;
 @RequestMapping("${api.prefix}/order_details")
 public class OrderDetailController {
   private final OrderDetailService orderDetailService;
+  private final LocalizationUtils localizationUtils;
   //Thêm mới 1 order_detail
   @PostMapping
   public ResponseEntity<?> createOrderDetail (

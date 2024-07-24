@@ -41,6 +41,8 @@ public class WebSecurityConfig {
                            .permitAll()
                            .requestMatchers(GET,
                                    String.format("%s/categories/**", apiPrefix)).hasAnyRole(Role.USER, Role.ADMIN)
+                           .requestMatchers(GET,
+                                   String.format("%s/roles**", apiPrefix)).hasAnyRole(Role.USER, Role.ADMIN)
                            .requestMatchers(POST,
                                    String.format("%s/categories/**", apiPrefix)).hasAnyRole(Role.ADMIN)
                            .requestMatchers(PUT,

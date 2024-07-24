@@ -12,7 +12,7 @@ public class LanguageConfig {
     public MessageSource messageSource() {
         //tuc la nơi nào chưa tệp đa ngôn ngữ
         ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
-        messageSource.setBasename("i18.message"); //tên cơ sở của các tệp tài liệu ngôn ngữ
+        messageSource.setBasename("i18n.messages"); //tên cơ sở của các tệp tài liệu ngôn ngữ
         messageSource.setDefaultEncoding("UTF-8");
         return messageSource;
     }
