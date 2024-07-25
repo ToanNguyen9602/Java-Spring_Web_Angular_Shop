@@ -13,6 +13,7 @@ import com.project.shopapp.services.IProductService;
 import com.project.shopapp.services.ProductService;
 import jakarta.validation.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -26,6 +27,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
@@ -127,7 +129,6 @@ public class ProductController {
     } catch (Exception e) {
       return ResponseEntity.badRequest().body(e.getMessage()); //)
     }
-
   }
 
   private String storeFile(MultipartFile file) throws IOException {
@@ -202,4 +203,23 @@ public class ProductController {
     }
     return ResponseEntity.status(HttpStatus.OK).body("Faker products generated successfully");
   }
+
+  @GetMapping("/images/{imageName}")
+  public ResponseEntity<?> viewImage(@PathVariable String imageName) {
+    try {
+      java.nio.file.Path imagePath = Paths.get("uploads/" + imageName);
+      UrlResource resource = new UrlResource(imagePath.toUri());
+
+      if (resource.exists()) {
+        return ResponseEntity.ok()
+                .contentType(MediaType.IMAGE_JPEG)
+                .body(resource);
+      } else {
+        return ResponseEntity.notFound().build();
+      }
+    } catch (Exception e) {
+        return ResponseEntity.notFound().build();
+    }
+  }
+
 }
