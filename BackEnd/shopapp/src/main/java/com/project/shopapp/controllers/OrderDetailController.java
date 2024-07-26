@@ -58,6 +58,7 @@ public class OrderDetailController {
       return ResponseEntity.badRequest().body(e.getMessage());
     }
   }
+
   @DeleteMapping("/{id}")
   public ResponseEntity<?> deleteOrderDetail (
     @Valid @PathVariable("id") Long id) {

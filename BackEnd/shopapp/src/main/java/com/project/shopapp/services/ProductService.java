@@ -11,6 +11,7 @@ import lombok.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -21,6 +22,7 @@ public class ProductService implements IProductService{
   private final CategoryRespository categoryRespository;
   private final ProductImageRepository productImageRepository;
   @Override
+  @Transactional
   public Product createProduct(ProductDTO productDTO) throws DataNotFoundException {
       Category existingCategory = categoryRespository.findById(productDTO.getCategoryId())
         .orElseThrow(() -> new DataNotFoundException(
@@ -50,6 +52,7 @@ public class ProductService implements IProductService{
   }
 
   @Override
+  @Transactional
   public Product updateProduct(Long productId, ProductDTO productDTO) throws Exception {
     Product existingProduct = getProductById(productId);
     existingProduct.setName(productDTO.getName());
@@ -68,6 +71,7 @@ public class ProductService implements IProductService{
   }
 
   @Override
+  @Transactional
   public void deleteProduct(Long id) {
     //productRespository.deleteById(id);
     Optional<Product> optionalProduct = productRespository.findById(id);
