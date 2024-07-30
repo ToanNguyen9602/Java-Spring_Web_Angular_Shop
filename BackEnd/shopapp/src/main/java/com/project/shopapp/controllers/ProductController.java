@@ -101,7 +101,7 @@ public class ProductController {
       Product existingProduct = productService.getProductById(productId);
       files = files == null ? new ArrayList<MultipartFile>() : files;
       if (files.size() > ProductImage.MAXIMUM_IMAGES_PER_PRODUCT) {
-        return ResponseEntity.status(HttpStatus.PAYLOAD_TOO_LARGE).body("File to large. Maximum 5 images");
+        return ResponseEntity.status(HttpStatus.PAYLOAD_TOO_LARGE).body("File to large. Maximum only 5 images");
       }
       List<ProductImage> productImages  = new ArrayList<>();
       for (MultipartFile file : files) {
