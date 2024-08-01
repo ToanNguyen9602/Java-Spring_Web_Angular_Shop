@@ -43,12 +43,13 @@ public class ProductService implements IProductService{
     return productRespository.findById(productId).orElseThrow(() ->
       new DataNotFoundException("Cannot find Product with Id: " + productId));
   }
-
   @Override
-  public Page<ProductResponse> getAllProducts(PageRequest pageRequest) {
-    //lấy danh sách sanr phẩm theo page và limit
+  public Page<ProductResponse> getAllProducts(String keyword, long categoryId, PageRequest pageRequest) {
+    //lấy danh sách sanr phẩm theo page và limit và categoryId nếu có
     //chuyển từ danh sách product sang danh sách productResponse
-    return productRespository.findAll(pageRequest).map(ProductResponse::fromProduct);
+    Page<Product> productsPage;
+    productsPage = productRespository.searchProducts(categoryId, keyword, pageRequest);
+    return productsPage.map(ProductResponse::fromProduct);
   }
 
   @Override

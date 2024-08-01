@@ -1,71 +1,130 @@
+@import "../../../styles.scss";
+
 .intro-section {
-    text-align: center;
-    color: white;
-    padding : 20px;
+  text-align: center;
+  color: white;
+  padding: 20px;
 }
+
 .search-box {
-    display:flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
 }
-.product-category{
-    width: 200px;
+
+.product-category {
+  width: 200px;
 }
-.search-input{
-    width: 300px;
-    background-color: rgb(19,23,42);
-    margin-right: 10px;
-    border-color: rgba(255, 255, 255, 0.5);
-    color: white;
+
+.search-input {
+  width: 300px;
+  background-color: $shopapp-background-color;
+  margin-right: 10px;
+  border-color: rgba(255, 255, 255, 0.5);
+  color: white;
 }
-.form-control{
-    background-color: transparent;
-    color: white;
+
+.form-control {
+  background-color: $shopapp-background-color;
+  color: white;
 }
-.form-control::placeholder{
-    color: rgba(255, 255, 255, 0.5);
-    opacity: 1;
+
+.product-category option {
+  background-color: rgba(255, 255, 255, 0.5); // Màu nền của các mục tùy chọn
+  color: black; // Màu chữ của các mục tùy chọn
 }
-.form-control:-ms-input-placeholder{
-    color: rgba(255, 255, 255, 0.5);
+
+// .form-control:hover {
+//   background-color: rgba(255, 255, 255, 0.5);
+//   color: white;
+// }
+
+// .form-control:focus {
+//   background-color: $shopapp-tint-color; // Màu nền khi focus
+//   color: white; // Màu chữ khi focus
+// }
+
+.form-control::placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: rgba(255, 255, 255, 0.5);
+  opacity: 1;
+  /* Firefox */
 }
-.form-control::-ms-input-placeholder{
-    color: rgba(255, 255, 255, 0.5);
+
+.form-control:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: rgba(255, 255, 255, 0.5);
 }
+
+.form-control::-ms-input-placeholder {
+  /* Microsoft Edge */
+  color: rgba(255, 255, 255, 0.5);
+}
+
 .product-item {
-   background-color: rgb(19, 23, 42);
-   border: 1px solid rgb(35, 39, 61);
-   border-radius: 20px;
-   padding: 20px;
-   margin-bottom: 20px;
+  background-color: $shopapp-background-color;
+  border: 1px solid rgb(35, 39, 61);
+  border-radius: 20px;
+  padding: 20px;
+  margin-bottom: 20px;
 }
+
 .product-image {
-    width: 100%;
-    height: auto;
-    margin-bottom: 10px;
+  width: 100%;
+  height: auto;
+  margin-bottom: 10px;
 }
+
 .product-name {
-    color: white;
+  color: white;
 }
+
 .product-description {
-    color: rgb(173, 178, 203);
+  color: rgb(173, 178, 203);
 }
+
 .product-warranty {
-    color: rgb(242, 126, 212);
+  color: $shopapp-tint-color;
 }
+
 .product-price {
-    color: white;
+  color: white;
 }
+
 .product-rating {
-    color: #FFD700;
-    margin-top: 10px;
+  color: #ffd700;
+  margin-top: 10px;
 }
+
 .product-actions {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
 }
+
 .space-x {
-    margin: 0 5px;
+  margin: 0 5px;
+  /*margin-top, margin-right, margin-bottom, margin-left*/
+}
+
+.page-number {
+  cursor: pointer;
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  margin: 0 2px;
+  border-radius: 3px;
+}
+
+.page-number.active {
+  background-color: $shopapp-color !important;
+  color: #fff;
+  border-color: $shopapp-color !important;
+}
+.btn-primary {
+  background-color: $shopapp-color;
+  border-color: $shopapp-color;
+}
+.btn.btn-primary {
+  margin-left: 10px;
 }

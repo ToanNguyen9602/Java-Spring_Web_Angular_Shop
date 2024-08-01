@@ -46,14 +46,16 @@ public class ProductController {
 
   @GetMapping("")
   public ResponseEntity<ProductListResponse> getProducts(
-      @RequestParam("page") int page,
-      @RequestParam("limit") int limit
+      @RequestParam(defaultValue = "0") int page,
+      @RequestParam(defaultValue = "10") int limit,
+      @RequestParam(defaultValue = "") String keyword,
+      @RequestParam(defaultValue = "0", name = "category_id") long categoryId
   ) {
     PageRequest pageRequest = PageRequest.of(page, limit
 //      ,Sort.by("createAt").descending()
       , Sort.by("id").ascending()
     );
-    Page<ProductResponse> productPage = productService.getAllProducts(pageRequest);
+    Page<ProductResponse> productPage = productService.getAllProducts(keyword, categoryId,pageRequest);
     int totalPages = productPage.getTotalPages();
     List<ProductResponse> products = productPage.getContent();
     return ResponseEntity.ok(ProductListResponse
@@ -217,7 +219,8 @@ public class ProductController {
                 .contentType(MediaType.IMAGE_JPEG)
                 .body(resource);
       } else {
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG)
+                .body(new UrlResource(Paths.get("uploads/notfound.jpeg").toUri()));
       }
     } catch (Exception e) {
         return ResponseEntity.notFound().build();

@@ -12,12 +12,10 @@ import org.springframework.stereotype.Service;
 public interface IProductService {
   Product createProduct(ProductDTO productDTO) throws DataNotFoundException;
   Product getProductById(Long id) throws Exception;
-  Page<ProductResponse> getAllProducts(PageRequest pageRequest);
   public Product updateProduct(Long id, ProductDTO productDTO) throws Exception;
   void deleteProduct(Long id);
   boolean existsByName(String name);
-
   ProductImage createProductImage (
     Long productId, ProductImageDTO productImageDTO) throws Exception;
-
+  Page<ProductResponse> getAllProducts(String keyword, long categoryId, PageRequest pageRequest);
 }

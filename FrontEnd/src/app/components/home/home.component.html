@@ -6,19 +6,25 @@
     <p>Xem sp di</p>
   </div>
 
-  <!--Đoạn này có 1 ô searchbox bên trái, 1 combobox ben phai-->
   <div class="search-box">
     <input
       type="text"
       class="form-control search-input"
       placeholder="Tìm sản phẩm"
+      [(ngModel)]="keyword"
     />
-    <select class="form-control product-category">
-      <option selected disabled>Danh mục sản phẩm</option>
-      <option>Đồ điện tử</option>
-      <option>Hải Sản</option>
-      <option>Bánh Kẹo Hàn Quốc</option>
+    <select
+      class="form-control product-category"
+      [(ngModel)]="selectedCategoryId"
+    >
+      <option [value]="0">Tất cả</option>
+      <option *ngFor="let category of categories" [value]="category.id">
+        {{ category.name }}
+      </option>
     </select>
+    <button class="btn btn-primary ml-2" (click)="searchProducts()">
+      Tìm kiếm
+    </button>
   </div>
 
   <div class="row">
