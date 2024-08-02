@@ -9,10 +9,7 @@ import { LoginComponent } from "./components/login/login.component";
 import { RegisterComponent } from "./components/register/register.component";
 import { DetailProductComponent } from "./components/detail-product/detail-product.component";
 import { FormsModule } from "@angular/forms";
-import {
-  HTTP_INTERCEPTORS,
-  HttpClientModule
-} from "@angular/common/http";
+import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import { TokenInterceptor } from "./interceptors/token.interceptors";
 
 @NgModule({
@@ -35,12 +32,12 @@ import { TokenInterceptor } from "./interceptors/token.interceptors";
     },
   ],
   bootstrap: [
-    HomeComponent,
+    // HomeComponent,
     //OrderComponent,
     //OrderConfirmComponent,
     // LoginComponent,
     // RegisterComponent,
-    //DetailProductComponent
+    DetailProductComponent,
   ],
 })
 export class AppModule {}
