@@ -95,7 +95,7 @@ public class ProductService implements IProductService{
 
     ProductImage newProductImage = ProductImage.builder()
       .product(existingProduct)
-      .imageUrl(productImageDTO.getImageUrl())
+            .imageURL(productImageDTO.getImageUrl())
       .build();
 
     //Kh cho insert quá 5 ảnh cho 1 sản phẩm

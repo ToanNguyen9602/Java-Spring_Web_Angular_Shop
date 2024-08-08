@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Product } from "src/app/models/product";
-import { ProductImage } from "src/app/models/product_image";
+import { ProductImage } from "src/app/models/product.image";
 import { environtment } from "src/app/environments/environment";
 import { CategoryService } from "src/app/service/category.service";
 import { ProductService } from "src/app/service/product.service";
@@ -34,6 +34,7 @@ export class DetailProductComponent implements OnInit {
           if (response.product_images && response.product_images.length > 0) {
             response.product_images.forEach((product_image: ProductImage) => {
               product_image.image_url = `${environtment.apiBaseUrl}/products/images/${product_image.image_url}`;
+              debugger;
             });
           }
           debugger;
