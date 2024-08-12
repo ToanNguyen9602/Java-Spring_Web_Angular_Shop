@@ -1,3 +1,4 @@
+import { CartService } from './../../service/cart.service';
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Product } from "src/app/models/product";
@@ -15,13 +16,16 @@ export class DetailProductComponent implements OnInit {
   product?: Product;
   productId: number = 0;
   currentImageIndex: number = 0;
+  quantity: number = 1;
   constructor(
-    private productService: ProductService // private categoryService: CategoryService, // private router: Router, // private activatedRoute: ActivatedRoute
+    private productService: ProductService, // private categoryService: CategoryService, // private router: Router, // private activatedRoute: ActivatedRoute
+    private cartService: CartService
   ) {}
 
   ngOnInit(): void {
     //lấy productId từ URL
     debugger;
+    // this.cartService.clearCart();
     const idParam = 9;
     if (idParam !== null) {
       this.productId = +idParam;
@@ -71,7 +75,6 @@ export class DetailProductComponent implements OnInit {
       this.currentImageIndex = index;
     }
   }
-
   thumbnailClick(index: number) {
     debugger;
     //gọi thumbail để xem
@@ -81,9 +84,28 @@ export class DetailProductComponent implements OnInit {
     debugger;
     this.showImage(this.currentImageIndex + 1);
   }
-
   previousImage(): void {
     debugger;
     this.showImage(this.currentImageIndex - 1);
+  }
+  addToCart(): void {
+    debugger
+    if (this.product) {
+      console.log("Product ID: ", this.product.id); 
+      this.cartService.addToCart(this.product.id, this.quantity);
+    } else {
+      console.error("Cannot add this item to cart. Product is null")
+    }
+  }
+  increaseQuantity(): void {
+    this.quantity++;
+  }
+  decreaseQuantity(): void {
+    if (this.quantity > 1) {
+      this.quantity--;
+    }
+  }
+  buyNow(): void {
+    
   }
 }
