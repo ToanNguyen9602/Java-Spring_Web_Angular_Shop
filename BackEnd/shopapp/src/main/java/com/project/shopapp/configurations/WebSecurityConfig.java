@@ -30,7 +30,6 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(AbstractHttpConfigurer::disable)
                 .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(requests -> {
                    requests
@@ -43,6 +42,8 @@ public class WebSecurityConfig {
                                    String.format("%s/roles**", apiPrefix)).permitAll()
                            .requestMatchers(GET,
                                    String.format("%s/categories**", apiPrefix)).permitAll()
+                           .requestMatchers(GET,
+                                   String.format("%s/categories/**", apiPrefix)).permitAll()
                            .requestMatchers(POST,
                                    String.format("%s/categories/**", apiPrefix)).hasAnyRole(Role.ADMIN)
                            .requestMatchers(PUT,
@@ -56,27 +57,28 @@ public class WebSecurityConfig {
                            .requestMatchers(GET,
                                    String.format("%s/products/**", apiPrefix)).permitAll()
                            .requestMatchers(POST,
-                                   String.format("%s/products/**", apiPrefix)).hasAnyRole(Role.ADMIN)
+                                   String.format("%s/products**", apiPrefix)).hasAnyRole(Role.ADMIN)
                            .requestMatchers(PUT,
                                    String.format("%s/products/**", apiPrefix)).hasAnyRole(Role.ADMIN)
                            .requestMatchers(DELETE,
                                    String.format("%s/products/**", apiPrefix)).hasAnyRole(Role.ADMIN)
                            .requestMatchers(POST,
                                    String.format("%s/orders/**", apiPrefix)).hasAnyRole(Role.USER)
+
                            .requestMatchers(GET,
-                                   String.format("%s/orders/**", apiPrefix)).hasAnyRole(Role.USER, Role.ADMIN)
+                                   String.format("%s/orders/**", apiPrefix)).permitAll()
                            .requestMatchers(PUT,
                                    String.format("%s/orders/**", apiPrefix)).hasRole(Role.ADMIN)
                            .requestMatchers(DELETE,
                                    String.format("%s/orders/**", apiPrefix)).hasRole(Role.ADMIN)
                            .requestMatchers(POST,
-                                   String.format("%s/orders_details/**", apiPrefix)).hasAnyRole(Role.USER)
+                                   String.format("%s/order_details/**", apiPrefix)).hasAnyRole(Role.USER)
                            .requestMatchers(GET,
-                                   String.format("%s/orders_details/**", apiPrefix)).hasAnyRole(Role.USER, Role.ADMIN)
+                                   String.format("%s/order_details/**", apiPrefix)).permitAll()
                            .requestMatchers(PUT,
-                                   String.format("%s/orders_details/**", apiPrefix)).hasRole(Role.ADMIN)
+                                   String.format("%s/order_details/**", apiPrefix)).hasRole(Role.ADMIN)
                            .requestMatchers(DELETE,
-                                   String.format("%s/orders_details/**", apiPrefix)).hasRole(Role.ADMIN)
+                                   String.format("%s/order_details/**", apiPrefix)).hasRole(Role.ADMIN)
                            .anyRequest()
                            .authenticated();
                 })
@@ -89,14 +91,14 @@ public class WebSecurityConfig {
             public void customize(CorsConfigurer<HttpSecurity> httpSecurityCorsConfigurer) {
                 CorsConfiguration configuration = new CorsConfiguration();
                 configuration.setAllowedOrigins(List.of("*"));
-                configuration.setAllowedMethods(Arrays.asList("GET","POST","PUT","DELETE","OPTIONS"));
+                configuration.setAllowedMethods(Arrays.asList("GET","PATCH","POST","PUT","DELETE","OPTIONS"));
                 configuration.setAllowedHeaders(Arrays.asList("authorization","content-type","x-auth-token"));
+                configuration.setExposedHeaders(List.of("x-auth-token"));
                 UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
                 source.registerCorsConfiguration("/**",configuration);
                 httpSecurityCorsConfigurer.configurationSource(source);
             }
         });
-
         return http.build();
     }
 

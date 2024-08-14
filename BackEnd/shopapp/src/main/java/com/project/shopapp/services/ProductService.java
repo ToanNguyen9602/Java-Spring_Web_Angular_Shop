@@ -13,6 +13,7 @@ import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -38,14 +39,29 @@ public class ProductService implements IProductService{
       return productRespository.save(newProduct);
   }
 
+//  @Override
+//  public Product getProductById(Long productId) throws Exception {
+//    return productRespository.findById(productId).orElseThrow(() ->
+//      new DataNotFoundException("Cannot find Product with Id: " + productId));
+//  }
+
   @Override
-  public Product getProductById(Long productId) throws Exception {
-    return productRespository.findById(productId).orElseThrow(() ->
-      new DataNotFoundException("Cannot find Product with Id: " + productId));
+  public Product getProductById(long productId) throws Exception {
+    Optional<Product> optionalProduct = productRespository.getDetailProduct(productId);
+    if(optionalProduct.isPresent()) {
+      return optionalProduct.get();
+    }
+    throw new DataNotFoundException("Cannot find product with id =" + productId);
   }
+
+  @Override
+  public List<Product> findProductsByIds(List<Long> productIds) {
+    return productRespository.findProductsByIds(productIds);
+  }
+
   @Override
   public Page<ProductResponse> getAllProducts(String keyword, long categoryId, PageRequest pageRequest) {
-    //lấy danh sách sanr phẩm theo page và limit và categoryId nếu có
+    //lấy danh sách sản phẩm theo page và limit và categoryId nếu có
     //chuyển từ danh sách product sang danh sách productResponse
     Page<Product> productsPage;
     productsPage = productRespository.searchProducts(categoryId, keyword, pageRequest);

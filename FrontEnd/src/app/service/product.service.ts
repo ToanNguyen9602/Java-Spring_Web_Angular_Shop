@@ -1,7 +1,6 @@
 import { Injectable } from "@angular/core";
-import { environtment } from "../environments/environment";
+import { environment } from "../environments/environment";
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
-
 import { Product } from "../models/product";
 import { Observable } from "rxjs";
 
@@ -9,18 +8,9 @@ import { Observable } from "rxjs";
   providedIn: "root",
 })
 export class ProductService {
-  private apiGetProducts = `${environtment.apiBaseUrl}/products`;
-  private apiConfig = {
-    headers: this.createHeader(),
-  };
+  private apiGetProducts = `${environment.apiBaseUrl}/products`;
 
   constructor(private http: HttpClient) {}
-  private createHeader(): HttpHeaders {
-    return new HttpHeaders({
-      "Content-Type": "application/json",
-      "Accept-Language": "vi",
-    });
-  }
 
   getProducts(
     keyword: string,
@@ -37,6 +27,15 @@ export class ProductService {
   }
 
   getDetailProduct(productId: number) {
-    return this.http.get(`${environtment.apiBaseUrl}/products/${productId}`);
+    return this.http.get(`${environment.apiBaseUrl}/products/${productId}`);
+  }
+
+  getProductsByIds(productIds: number[]): Observable<Product[]> {
+    //chuyển danh sách Id thành 1 chuỗi và truyền vào params
+    debugger;
+    const params = new HttpParams().set("ids", productIds.join(","));
+    return this.http.get<Product[]>(`${this.apiGetProducts}/by-ids?`, {
+      params,
+    });
   }
 }

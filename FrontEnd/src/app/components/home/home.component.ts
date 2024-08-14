@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Category } from "src/app/models/category";
 import { Product } from "src/app/models/product";
-import { environtment } from "src/app/environments/environment";
+import { environment } from "src/app/environments/environment";
 import { CategoryService } from "src/app/service/category.service";
 import { ProductService } from "src/app/service/product.service";
 
@@ -77,7 +77,7 @@ export class HomeComponent implements OnInit {
           debugger;
           response.products.forEach((product: Product) => {
             //show image
-            product.url = `${environtment.apiBaseUrl}/products/images/${product.thumbnail}`;
+            product.url = `${environment.apiBaseUrl}/products/images/${product.thumbnail}`;
           });
           this.products = response.products;
           this.totalPages = response.totalPages;

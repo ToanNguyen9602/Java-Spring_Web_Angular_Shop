@@ -1,4 +1,3 @@
-
 import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { HomeComponent } from "./components/home/home.component";
@@ -35,10 +34,10 @@ import { TokenInterceptor } from "./interceptors/token.interceptors";
   bootstrap: [
     // HomeComponent,
     //OrderComponent,
-    //OrderConfirmComponent,
+    OrderConfirmComponent,
     // LoginComponent,
     // RegisterComponent,
-    DetailProductComponent,
+    // DetailProductComponent,
   ],
 })
 export class AppModule {}

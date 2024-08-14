@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { environtment } from "../environments/environment";
+import { environment } from "../environments/environment";
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 
 import { Category } from "../models/category";
@@ -9,7 +9,7 @@ import { Observable } from "rxjs";
   providedIn: "root",
 })
 export class CategoryService {
-  private apiGetCategories = `${environtment.apiBaseUrl}/categories`;
+  private apiGetCategories = `${environment.apiBaseUrl}/categories`;
   private apiConfig = {
     headers: this.createHeader(),
   };

@@ -8,6 +8,7 @@ import lombok.*;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 @Data @Builder
 @Getter@Setter
@@ -38,5 +39,6 @@ public class OrderDTO {
   private String paymentMethod;
   @JsonProperty("shipping_address")
   private String shippingAddress;
-
+  @JsonProperty("cart_items")
+  private List<CartItemDTO> cartItems;
 }

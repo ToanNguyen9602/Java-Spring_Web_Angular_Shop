@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ProductRepository extends JpaRepository <Product, Long> {
   boolean existsByName(String name);
@@ -23,4 +24,9 @@ public interface ProductRepository extends JpaRepository <Product, Long> {
   Page<Product> searchProducts (@Param("categoryId") Long categoryId,
                                 @Param("keyword") String keyword, Pageable pageable);
 
+  @Query("select p from Product p left join FETCH p.productImages where p.id = :productId")
+  Optional<Product> getDetailProduct(@Param("productId") Long productId);
+
+  @Query("select p from Product p WHERE p.id IN :productIds")
+  List<Product> findProductsByIds(@Param("productIds") List<Long> productIds);
 }
