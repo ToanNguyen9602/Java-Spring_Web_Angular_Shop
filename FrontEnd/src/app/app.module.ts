@@ -33,8 +33,8 @@ import { TokenInterceptor } from "./interceptors/token.interceptors";
   ],
   bootstrap: [
     // HomeComponent,
-    //OrderComponent,
-    OrderConfirmComponent,
+    OrderComponent,
+    // OrderConfirmComponent,
     // LoginComponent,
     // RegisterComponent,
     // DetailProductComponent,
