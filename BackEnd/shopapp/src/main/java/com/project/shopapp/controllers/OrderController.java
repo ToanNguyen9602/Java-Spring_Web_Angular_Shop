@@ -29,8 +29,8 @@ public class OrderController {
                 .stream().map(FieldError::getDefaultMessage).toList();
         return ResponseEntity.badRequest().body(errorMessages);
       }
-      Order order = orderService.createOrder(orderDTO);
-      return ResponseEntity.ok(order);
+      Order orderResponse = orderService.createOrder(orderDTO);
+      return ResponseEntity.ok(orderResponse);
     } catch (Exception e) {
       return ResponseEntity.badRequest().body(e.getMessage());
     }

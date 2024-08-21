@@ -26,7 +26,9 @@ public class OrderService implements IOrderService {
   private final ModelMapper modelMapper;
   private final ProductRepository productRepository;
   private final OrderDetailRepository orderDetailRepository;
+
   @Override
+  @Transactional
   public Order createOrder(OrderDTO orderDTO) throws DataNotFoundException {
     //tìm userId xem có tồn tài không
     //Optional<User> optionalUser = userRepository.findById(orderDTO.getUserId());
@@ -34,6 +36,8 @@ public class OrderService implements IOrderService {
       .orElseThrow(()-> new DataNotFoundException
       ("User not found with id: " + orderDTO.getUserId()));
     //convert orderDTO => Order
+    //dùng thư viện Model Mapper
+    // Tạo một luồng bảng ánh xạ riêng để kiểm soát việc ánh xạ
     modelMapper.typeMap(OrderDTO.class, Order.class)
       .addMappings(mapper -> mapper.skip(Order::setId));
     Order order = new Order();
@@ -50,6 +54,7 @@ public class OrderService implements IOrderService {
     order.setActive(true);
     order.setTotalMoney(order.getTotalMoney());
     orderRepository.save(order);
+
     //Tạo danh sách các đới tượng OrderDetail từ cartItem
     List<OrderDetail> orderDetails = new ArrayList<>();
     for (CartItemDTO cartItemDTO : orderDTO.getCartItems()) {
@@ -62,19 +67,18 @@ public class OrderService implements IOrderService {
       int quantity = cartItemDTO.getQuantity();
 
       //Tìm thông tin sản phẩm từ cơ sở dữ liệu (hoặc sử dụng cache nếu cần)
-      Product product = productRepository.findById(productId).orElseThrow(() -> {
+      Product product = productRepository.findById(productId).orElseThrow(() ->
         new DataNotFoundException("Product not found with id: " + productId));
 
       //Đặt thông tin cho OrderDetail
-        orderDetail.setOrder(order);
+        orderDetail.setProduct(product);
         orderDetail.setNumberOfProducts(quantity);
         // Các trường khác của OrderDetail nếu cần
         orderDetail.setPrice(product.getPrice());
         //Thêm orderDetail vào danh sách
         orderDetails.add(orderDetail);
       }
-
-    orderRepository.saveAll(orderDetails);
+    orderDetailRepository.saveAll(orderDetails);
     return order;
   }
   @Override
