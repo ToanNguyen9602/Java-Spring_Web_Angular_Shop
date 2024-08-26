@@ -8,40 +8,17 @@ import {
 import { CartItemDTO } from "./cart.item.dto";
 
 export class OrderDTO {
-  @IsNumber()
   userId: number;
-
-  @IsString()
-  @IsNotEmpty()
   fullname: string;
-
-  @IsNotEmpty()
-  @IsEmail()
   email: string;
-
-  @IsPhoneNumber()
   phone_number: string;
-
-  @IsString()
-  @IsNotEmpty()
   address: string;
-
-  @IsString()
   note: string;
-
-  @IsNumber()
   total_money: number;
-
-  @IsString()
   shipping_method: string;
-
-  @IsString()
   payment_method: string;
-
-  @IsString()
   coupon_code: string;
-
-  cart_items: CartItemDTO[];
+  cart_items: { product_id: number; quantity: number }[];
 
   constructor(data: any) {
     this.userId = data.user_id;
@@ -55,5 +32,6 @@ export class OrderDTO {
     this.shipping_method = data.shipping_method;
     this.payment_method = data.payment_method;
     this.coupon_code = data.coupon_code;
+    this.cart_items = data.cart_items;
   }
 }
