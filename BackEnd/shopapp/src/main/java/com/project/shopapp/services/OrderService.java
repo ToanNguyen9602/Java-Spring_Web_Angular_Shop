@@ -52,7 +52,7 @@ public class OrderService implements IOrderService {
     }
     order.setShippingDate(shippingDate);
     order.setActive(true);
-    order.setTotalMoney(order.getTotalMoney());
+    order.setTotalMoney(orderDTO.getTotalMoney());
     orderRepository.save(order);
 
     //Tạo danh sách các đới tượng OrderDetail từ cartItem

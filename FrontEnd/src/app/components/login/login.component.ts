@@ -58,6 +58,7 @@ export class LoginComponent {
     const loginDTO: LoginDTO = {
       phone_number: this.phoneNumber,
       password: this.password,
+      role_id: this.selectedRole?.id ?? 1,
     };
 
     this.userService.login(loginDTO).subscribe({
@@ -66,17 +67,14 @@ export class LoginComponent {
         // let token = response.token;
         //muốn sử dụng token trong các yêu cầu API
         const { token } = response;
-        this.tokenService.setToken(token);
+        if (this.rememberMe) this.tokenService.setToken(token);
         // this.router.navigate(["/login"]);
       },
       complete: () => {
         debugger;
       },
       error: (error: any) => {
-        //xử lý lỗi nếu có
-        alert(`Cannot login, error: ${error?.error?.message}`);
-        debugger;
-        console.error("Dang nhap khong thanh cong", error);
+        alert(error.error.message);
       },
     });
   }

@@ -20,8 +20,8 @@ export class OrderComponent implements OnInit {
   couponCode: string = "";
   totalAmount: number = 0;
   orderData: OrderDTO = {
-    userId: 1,
-    // fullname: '',  Khởi tạo rỗng, sẽ được điền từ form
+    user_id: 13,
+    fullname: '',
     email: "",
     phone_number: "",
     address: "",
@@ -30,8 +30,7 @@ export class OrderComponent implements OnInit {
     payment_method: "cod",
     shipping_method: "express",
     coupon_code: "",
-    cart_items: [],
-    fullname: "",
+    cart_items: []
   };
   constructor(
     private cartService: CartService,
@@ -108,7 +107,7 @@ export class OrderComponent implements OnInit {
     }
     //dữ liệu hợp lệ, gửi order đi
     this.orderService.placeOrder(this.orderData).subscribe({
-      next: (response: Order) => {
+      next: (response:Order) => {
         debugger;
         console.log("Đặt hàng thành công");
       },
