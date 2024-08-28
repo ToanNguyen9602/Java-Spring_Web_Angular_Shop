@@ -4,7 +4,7 @@ import { HomeComponent } from "./components/home/home.component";
 import { HeaderComponent } from "./components/header/header.component";
 import { FooterComponent } from "./components/footer/footer.component";
 import { OrderComponent } from "./components/order/order.component";
-import { OrderConfirmComponent } from "./components/order-confirm/order-confirm.component";
+import { OrderConfirmComponent } from "./components/order-confirm/order.detail.component";
 import { LoginComponent } from "./components/login/login.component";
 import { RegisterComponent } from "./components/register/register.component";
 import { DetailProductComponent } from "./components/detail-product/detail-product.component";

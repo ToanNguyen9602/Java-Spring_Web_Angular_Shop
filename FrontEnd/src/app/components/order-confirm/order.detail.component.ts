@@ -6,10 +6,10 @@ import { ProductService } from "src/app/service/product.service";
 
 @Component({
   selector: "app-order-confirm",
-  templateUrl: "./order-confirm.component.html",
-  styleUrls: ["./order-confirm.component.scss"],
+  templateUrl: "./order.detail.component.html",
+  styleUrls: ["./order.detail.component.scss"],
 })
-export class OrderConfirmComponent implements OnInit {
+export class OrderDetailComponent implements OnInit {
   cartItems: { product: Product; quantity: number }[] = [];
   totalAmount: number = 0;
   couponCode: string = "";
