@@ -4,6 +4,7 @@ import { Product } from "src/app/models/product";
 import { environment } from "src/app/environments/environment";
 import { CategoryService } from "src/app/service/category.service";
 import { ProductService } from "src/app/service/product.service";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-home",
@@ -23,7 +24,8 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private productService: ProductService,
-    private categoryService: CategoryService
+    private categoryService: CategoryService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -48,7 +50,6 @@ export class HomeComponent implements OnInit {
       error: (error: any) => {
         console.log("Error fetching categories", error);
       },
-
     });
   }
 
@@ -120,5 +121,10 @@ export class HomeComponent implements OnInit {
     return new Array(endPage - startPage + 1)
       .fill(0)
       .map((_, index) => startPage + index);
+  }
+
+  onProductClick(productId: number) {
+    debugger;
+    this.router.navigate(["/products", productId]);
   }
 }

@@ -19,14 +19,16 @@ export class DetailProductComponent implements OnInit {
   quantity: number = 1;
   constructor(
     private productService: ProductService, // private categoryService: CategoryService, // private router: Router, // private activatedRoute: ActivatedRoute
-    private cartService: CartService
+    private cartService: CartService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute
   ) {}
 
   ngOnInit() {
     //lấy productId từ URL
     // debugger;
     // this.cartService.clearCart();
-    const idParam = 20;
+    const idParam = this.activatedRoute.snapshot.paramMap.get("id");
     if (idParam !== null) {
       this.productId = +idParam;
     }
@@ -102,5 +104,7 @@ export class DetailProductComponent implements OnInit {
       this.quantity--;
     }
   }
-  buyNow(): void {}
+  buyNow(): void {
+    this.router.navigate(["/orders"]);
+  }
 }
