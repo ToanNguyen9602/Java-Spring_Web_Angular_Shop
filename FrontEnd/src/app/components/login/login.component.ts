@@ -3,10 +3,11 @@ import { LoginDTO } from "../../dtos/user/login.dto";
 import { UserService } from "../../service/user.service";
 import { Router } from "@angular/router";
 import { NgForm } from "@angular/forms";
-import { LoginResponse } from "src/app/responses/login.response";
+import { LoginResponse } from "src/app/responses/user/login.response";
 import { TokenService } from "src/app/service/token.service";
 import { RoleService } from "src/app/service/role.service";
 import { Role } from "src/app/dtos/user/role";
+import { UserResponse } from "src/app/responses/user/user.response";
 
 @Component({
   selector: "app-login",
@@ -21,6 +22,7 @@ export class LoginComponent {
   roles: Role[] = [];
   rememberMe: boolean = true;
   selectedRole: Role | undefined;
+  userResponse?: UserResponse;
 
   constructor(
     private router: Router,
@@ -68,7 +70,25 @@ export class LoginComponent {
         //muốn sử dụng token trong các yêu cầu API
         const { token } = response;
         if (this.rememberMe) this.tokenService.setToken(token);
-        // this.router.navigate(["/login"]);
+        debugger;
+        this.userService.getUserDetail(token).subscribe({
+          next: (response: any) => {
+            debugger;
+            this.userResponse = {
+              ...response,
+              date_of_birth: new Date(response.date_of_birth),
+            };
+            this.userService.saveUserToLocalStorage(this.userResponse);
+            this.router.navigate(["/"]);
+          },
+          complete: () => {
+            debugger;
+          },
+          error: (error: any) => {
+            debugger;
+            alert(error.error.message);
+          },
+        });
       },
       complete: () => {
         debugger;
