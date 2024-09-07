@@ -55,7 +55,7 @@ export class OrderComponent implements OnInit {
 
   ngOnInit(): void {
     debugger;
-    this.cartService.clearCart();
+    // this.cartService.clearCart();
     this.orderData.user_id = this.tokenService.getUserId();
     // Lấy danh sách sản phẩm từ giỏ hàng
     const cart = this.cartService.getCart();
@@ -111,6 +111,7 @@ export class OrderComponent implements OnInit {
         product_id: cartItem.product.id,
         quantity: cartItem.quantity,
       }));
+      this.orderData.total_money = this.totalAmount;
     }
     //dữ liệu hợp lệ, gửi order đi
     this.orderService.placeOrder(this.orderData).subscribe({
