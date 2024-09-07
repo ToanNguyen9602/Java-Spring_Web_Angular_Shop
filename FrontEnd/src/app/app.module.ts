@@ -12,8 +12,9 @@ import { FormsModule } from "@angular/forms";
 import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import { TokenInterceptor } from "./interceptors/token.interceptors";
 import { ReactiveFormsModule } from "@angular/forms";
-import { AppComponent } from './app/app.component';
+import { AppComponent } from "./app/app.component";
 import { AppRoutingModules } from "./app-routing.module";
+import { NgbPopoverModule } from "@ng-bootstrap/ng-bootstrap";
 
 @NgModule({
   declarations: [
@@ -27,7 +28,14 @@ import { AppRoutingModules } from "./app-routing.module";
     DetailProductComponent,
     AppComponent,
   ],
-  imports: [BrowserModule, FormsModule, HttpClientModule, ReactiveFormsModule, AppRoutingModules],
+  imports: [
+    BrowserModule,
+    FormsModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    AppRoutingModules,
+    NgbPopoverModule,
+  ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
@@ -42,7 +50,7 @@ import { AppRoutingModules } from "./app-routing.module";
     // LoginComponent,
     // RegisterComponent,
     // DetailProductComponent,
-    AppComponent
+    AppComponent,
   ],
 })
 export class AppModule {}
