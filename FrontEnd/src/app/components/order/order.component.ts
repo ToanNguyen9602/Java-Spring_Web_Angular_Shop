@@ -8,6 +8,7 @@ import { CartService } from "src/app/service/cart.service";
 import { OrderService } from "src/app/service/order.service";
 import { ProductService } from "src/app/service/product.service";
 import { TokenService } from "src/app/service/token.service";
+import { Router, ActivatedRoute } from "@angular/router";
 
 @Component({
   selector: "app-order",
@@ -21,7 +22,7 @@ export class OrderComponent implements OnInit {
   totalAmount: number = 0;
   orderData: OrderDTO = {
     user_id: 13,
-    fullname: '',
+    fullname: "",
     email: "",
     phone_number: "",
     address: "",
@@ -30,14 +31,16 @@ export class OrderComponent implements OnInit {
     payment_method: "cod",
     shipping_method: "express",
     coupon_code: "",
-    cart_items: []
+    cart_items: [],
   };
   constructor(
     private cartService: CartService,
     private productService: ProductService,
     private orderService: OrderService,
     private formBuilder: FormBuilder,
-    private tokenService: TokenService
+    private tokenService: TokenService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute
   ) {
     this.orderForm = this.formBuilder.group({
       fullname: ["", Validators.required],
@@ -52,11 +55,16 @@ export class OrderComponent implements OnInit {
 
   ngOnInit(): void {
     debugger;
+    this.cartService.clearCart();
+    this.orderData.user_id = this.tokenService.getUserId();
     // Lấy danh sách sản phẩm từ giỏ hàng
     const cart = this.cartService.getCart();
     // Chuyển danh sách ID từ Map giỏ hàng
     const productIds = Array.from(cart.keys());
     debugger;
+    if (productIds.length === 0) {
+      return;
+    }
     //get info detail product by list productIds
     this.productService.getProductsByIds(productIds).subscribe({
       next: (products) => {
@@ -72,7 +80,6 @@ export class OrderComponent implements OnInit {
             quantity: cart.get(productId)!,
           };
         });
-        console.log("done");
       },
       complete: () => {
         debugger;
@@ -107,9 +114,11 @@ export class OrderComponent implements OnInit {
     }
     //dữ liệu hợp lệ, gửi order đi
     this.orderService.placeOrder(this.orderData).subscribe({
-      next: (response:Order) => {
+      next: (response: Order) => {
         debugger;
-        console.log("Đặt hàng thành công");
+        alert("Order placed successfully!");
+        this.cartService.clearCart();
+        this.router.navigate(["/"]);
       },
       complete: () => {
         debugger;
@@ -117,7 +126,7 @@ export class OrderComponent implements OnInit {
       },
       error: (error: any) => {
         debugger;
-        console.error("Lỗi khi đặt hàng: ", error);
+        alert(`Lỗi khi đặt hàng: ${error}`);
       },
     });
   }
