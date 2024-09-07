@@ -26,13 +26,30 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link active" routerLink="/">Trang chủ</a>
+            <a
+              class="nav-link"
+              [ngClass]="{ active: activeNavItem === 0 }"
+              routerLink="/"
+              (click)="setActiveNavItem(0)"
+              >Trang chủ</a
+            >
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="/">Thông báo</a>
+            <a
+              class="nav-link"
+              [ngClass]="{ active: activeNavItem === 1 }"
+              routerLink="/"
+              (click)="setActiveNavItem(1)"
+              >Thông báo</a
+            >
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="/orders">
+            <a
+              class="nav-link"
+              [ngClass]="{ active: activeNavItem === 2 }"
+              routerLink="/orders"
+              (click)="setActiveNavItem(2)"
+            >
               <i class="fas fa-shopping-cart icon"></i>
               Giỏ hàng
             </a>
@@ -40,7 +57,7 @@
           <li class="nav-item">
             <ng-container *ngIf="userResponse">
               <ng-container
-                ngbPopover="Tài khoản của tôi,Đơn mua,Đăng xuất"
+                ngbPopover="My Profile, Order History, Logout"
                 popoverTitle="User Actions"
                 triggers="click"
                 [placement]="'bottom'"

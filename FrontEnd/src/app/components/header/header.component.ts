@@ -12,6 +12,7 @@ import { UserService } from "src/app/service/user.service";
 export class HeaderComponent implements OnInit {
   userResponse?: UserResponse | null;
   isPopooverOpen = false;
+  activeNavItem: number = 0;
 
   constructor(
     private userService: UserService,
@@ -36,5 +37,8 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.userResponse = this.userService.getUserResponseFromLocalStorage();
+  }
+  setActiveNavItem(index: number) {
+    this.activeNavItem = index;
   }
 }
