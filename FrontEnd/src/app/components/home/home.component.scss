@@ -1,4 +1,4 @@
-@import "../../../styles.scss";
+@import "../../styles/shared-styles.scss";
 
 .intro-section {
   text-align: center;
@@ -26,24 +26,9 @@
 }
 
 .form-control {
-  background-color: $shopapp-background-color;
+  background-color: transparent;
   color: white;
 }
-
-.product-category option {
-  background-color: rgba(255, 255, 255, 0.5); // Màu nền của các mục tùy chọn
-  color: black; // Màu chữ của các mục tùy chọn
-}
-
-// .form-control:hover {
-//   background-color: rgba(255, 255, 255, 0.5);
-//   color: white;
-// }
-
-// .form-control:focus {
-//   background-color: $shopapp-tint-color; // Màu nền khi focus
-//   color: white; // Màu chữ khi focus
-// }
 
 .form-control::placeholder {
   /* Chrome, Firefox, Opera, Safari 10.1+ */

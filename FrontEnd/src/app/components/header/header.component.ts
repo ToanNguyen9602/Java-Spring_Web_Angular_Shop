@@ -25,7 +25,7 @@ export class HeaderComponent implements OnInit {
   }
 
   handleItemClick(index: number): void {
-    alert(`${index}`)
+    // alert(`${index}`)
     if (index === 2) {
       this.userService.removeUserFromLocalStorage();
       this.tokenService.removeToken();
