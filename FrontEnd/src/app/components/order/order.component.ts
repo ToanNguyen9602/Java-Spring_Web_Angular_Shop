@@ -95,14 +95,6 @@ export class OrderComponent implements OnInit {
   placeOrder() {
     debugger;
     if (this.orderForm.valid) {
-      // this.orderData.fullname = this.orderForm.get('fullname')!.value;
-      // this.orderData.email = this.orderForm.get('email')!.value;
-      // this.orderData.phone_number = this.orderForm.get('phone_number')!.value;
-      // this.orderData.address = this.orderForm.get('address')!.value;
-      // this.orderData.note = this.orderForm.get('note')!.value;
-      // this.orderData.shipping_method = this.orderForm.get('shipping_method')!.value;
-      // this.orderData.payment_method = this.orderForm.get('payment_method')!.value;
-
       this.orderData = {
         ...this.orderData,
         ...this.orderForm.value,
