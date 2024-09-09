@@ -15,6 +15,7 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { AppComponent } from "./app/app.component";
 import { AppRoutingModules } from "./app-routing.module";
 import { NgbPopoverModule } from "@ng-bootstrap/ng-bootstrap";
+import { UserProfileComponent } from "./components/user-profile/user.profile.component";
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { NgbPopoverModule } from "@ng-bootstrap/ng-bootstrap";
     LoginComponent,
     RegisterComponent,
     DetailProductComponent,
+    UserProfileComponent,
     AppComponent,
   ],
   imports: [
@@ -50,6 +52,7 @@ import { NgbPopoverModule } from "@ng-bootstrap/ng-bootstrap";
     // LoginComponent,
     // RegisterComponent,
     // DetailProductComponent,
+    // UserProfileComponent,
     AppComponent,
   ],
 })

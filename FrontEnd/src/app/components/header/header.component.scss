@@ -36,9 +36,9 @@ header {
   background-color: $shopapp-color !important;
   color: white !important;
 }
-
-/* Add this CSS to your project's stylesheet */
-
+.popover-item {
+  cursor: pointer;
+}
 .popover-list {
   padding: 10px;
 }

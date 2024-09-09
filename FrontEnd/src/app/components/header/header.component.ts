@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
 import { NgbPopoverConfig } from "@ng-bootstrap/ng-bootstrap";
 import { UserResponse } from "src/app/responses/user/user.response";
 import { TokenService } from "src/app/service/token.service";
@@ -17,8 +18,13 @@ export class HeaderComponent implements OnInit {
   constructor(
     private userService: UserService,
     private tokenService: TokenService,
-    private popoverConfig: NgbPopoverConfig
+    private popoverConfig: NgbPopoverConfig,
+    private router: Router
   ) {}
+
+  ngOnInit(): void {
+    this.userResponse = this.userService.getUserResponseFromLocalStorage();
+  }
 
   togglePopover(event: Event): void {
     event.preventDefault();
@@ -26,8 +32,9 @@ export class HeaderComponent implements OnInit {
   }
 
   handleItemClick(index: number): void {
-    // alert(`${index}`)
-    if (index === 2) {
+    if (index === 0) {
+      this.router.navigate(["/user-profile"]);
+    } else if (index === 2) {
       this.userService.removeUserFromLocalStorage();
       this.tokenService.removeToken();
       this.userResponse = this.userService.getUserResponseFromLocalStorage();
@@ -35,9 +42,6 @@ export class HeaderComponent implements OnInit {
     this.isPopooverOpen = false;
   }
 
-  ngOnInit(): void {
-    this.userResponse = this.userService.getUserResponseFromLocalStorage();
-  }
   setActiveNavItem(index: number) {
     this.activeNavItem = index;
   }

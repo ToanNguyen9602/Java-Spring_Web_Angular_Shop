@@ -67,7 +67,6 @@ export class LoginComponent implements OnInit {
       next: (response: LoginResponse) => {
         debugger;
         // let token = response.token;
-        //muốn sử dụng token trong các yêu cầu API
         const { token } = response;
         if (this.rememberMe) this.tokenService.setToken(token);
         debugger;

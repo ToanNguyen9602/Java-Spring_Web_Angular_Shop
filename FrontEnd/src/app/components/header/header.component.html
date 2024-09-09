@@ -31,7 +31,7 @@
               [ngClass]="{ active: activeNavItem === 0 }"
               routerLink="/"
               (click)="setActiveNavItem(0)"
-              >Trang chủ</a
+              >Home</a
             >
           </li>
           <li class="nav-item">
@@ -40,7 +40,7 @@
               [ngClass]="{ active: activeNavItem === 1 }"
               routerLink="/"
               (click)="setActiveNavItem(1)"
-              >Thông báo</a
+              >About Us</a
             >
           </li>
           <li class="nav-item">
@@ -51,7 +51,7 @@
               (click)="setActiveNavItem(2)"
             >
               <i class="fas fa-shopping-cart icon"></i>
-              Giỏ hàng
+              Cart
             </a>
           </li>
           <li class="nav-item">
@@ -64,7 +64,6 @@
               >
                 <a
                   class="nav-link"
-                  routerLink="/profile"
                   [ngbPopover]="popoverContent"
                   (click)="togglePopover($event)"
                 >
@@ -72,22 +71,13 @@
                 </a>
                 <ng-template #popoverContent>
                   <div class="popover-list">
-                    <a
-                      href="#"
-                      class="popover-item"
-                      (click)="handleItemClick(0)"
+                    <a class="popover-item" (click)="handleItemClick(0)"
                       >My Profile</a
                     >
-                    <a
-                      href="#"
-                      class="popover-item"
-                      (click)="handleItemClick(1)"
+                    <a class="popover-item" (click)="handleItemClick(1)"
                       >Order History</a
                     >
-                    <a
-                      href="#"
-                      class="popover-item"
-                      (click)="handleItemClick(2)"
+                    <a class="popover-item" (click)="handleItemClick(2)"
                       >Logout</a
                     >
                   </div>
